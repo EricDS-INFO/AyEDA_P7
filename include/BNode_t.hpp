@@ -7,14 +7,15 @@ class BNode_t
 protected:
     BNode_t<KEY>        *left_;
     BNode_t<KEY>        *right_;
-    KEY                 data_;
+    KEY                  data_;
 
 public:
 
-    BNode_t(KEY data):
+    BNode_t(KEY& data):
     left_(NULL),
     right_(NULL)
     {
+
         data_.value( data.value() );
     }
 
@@ -36,15 +37,15 @@ public:
 
     ~BNode_t();
 
-    virtual BNode_t<KEY>* left(void)  { return left_; }
-    virtual BNode_t<KEY>* right(void)  { return right_; }
-    virtual KEY           data(void) { return data_; }
+    BNode_t<KEY>* left(void)  { return left_; }
+    BNode_t<KEY>* right(void)  { return right_; }
+    KEY&           data(void) { return data_; }
 
-    virtual void left(BNode_t<KEY>* NewChild) { left_ = NewChild; }
-    virtual void right(BNode_t<KEY>* NewChild) { right_ = NewChild; }
-    virtual void data(KEY& data) { data_ = data; }
+    void left(BNode_t<KEY>* NewChild) { left_ = NewChild; }
+    void right(BNode_t<KEY>* NewChild) { right_ = NewChild; }
+    void data(KEY& data) { data_ = data; }
 
-    virtual bool empty(void) { return data_ == -1; }
+    bool empty(void) { return data_ == -1; }
 
     template <class T>
     friend std::ostream& operator<< (std::ostream& os, BNode_t<T>& Node); 

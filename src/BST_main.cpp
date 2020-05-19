@@ -5,26 +5,25 @@
 #include "../include/dni.hpp"
 
 
-void    insert_key(BTree_t<int>& tree);
+void    insert_key(BSTree_t<int>& tree);
 
-void    extract_key(BTree_t<int>& tree);
+void    extract_key(BSTree_t<int>& tree);
 
-void    check_balance(BTree_t<int>& tree);
+void    check_balance(BSTree_t<int>& tree);
 
 int main(int argc, char* argv[]) 
 {   
     int mode;
     std::cout << "Indique el modo a ejecutar: \n";
-    std::cout << "[1] Simulación\n[2]Estadístico\nOpción: ";
+    std::cout << "[1] Simulación\n[2] Estadístico\nOpción: ";
     std::cin >> mode;
 
-        srand(time(NULL));
     if (mode == 1)
     {
 
         std::cout << "\t\t\t\t\t\tPROGRAMA DE SIMULACIÓN DE ÁRBOLES BINARIOS DE BÚSQUEDA\n";
         int op;
-        BTree_t<int> tree;
+        BSTree_t<int> tree;
         do
         {
             std::cout << "\n\nElija una opción: \n";
@@ -61,7 +60,8 @@ int main(int argc, char* argv[])
     }
     else if (mode == 2)
     {
-       
+       srand(time(NULL));
+            
         int n = 0, tests = 0;
         std::cout << "Introduzca el tamaño del arbol: ";
         std::cin >> n;
@@ -71,11 +71,10 @@ int main(int argc, char* argv[])
 
         std::vector<dni> testbench;
 
-        BTree_t<dni> tester;
+        BSTree_t<dni> tester;
 
         for (int i = 0; i < 2*n; i++)
         {
-            srand(time(NULL));
             dni aux;
             testbench.push_back(aux);
             if ( i < n)
@@ -87,11 +86,11 @@ int main(int argc, char* argv[])
 
 
 
-        int min = 10000000;
+        int min = 1000000000;
         int max = 0;
         int accum = 0;
         dni::reset_c();
-        std::cout << "\t\t\tNumero de comparaciones\n";
+        std::cout << "\n\n\n\t\t\tNumero de comparaciones\n";
         std::cout << "\t\t\tN\tPruebas\tMinimo\tMedio\tMáximo\n";
         
         for(int i  = 0; i < tests; i++)
@@ -155,7 +154,7 @@ int main(int argc, char* argv[])
 
 
 
-void    insert_key(BTree_t<int>& tree)
+void    insert_key(BSTree_t<int>& tree)
 {
     int num;
     std::cout << "Introduzca el entero a insertar: ";
@@ -165,7 +164,7 @@ void    insert_key(BTree_t<int>& tree)
 
 }
 
-void    check_balance(BTree_t<int>& tree)
+void    check_balance(BSTree_t<int>& tree)
 {
     int num;
     std::cout << "\n\ncomprobando equilibrio: \n";
@@ -182,7 +181,7 @@ void    check_balance(BTree_t<int>& tree)
 
 
 
-void    extract_key(BTree_t<int>& tree)
+void    extract_key(BSTree_t<int>& tree)
 {
 
     int num;

@@ -9,7 +9,8 @@ class BTree_t
        public:
  
         BNode_t<KEY>    *root_;
-        BTree_t(void): root_(NULL) {};
+
+        BTree_t(void) { root_ = NULL; }
         
         ~BTree_t(void);
         
@@ -20,11 +21,6 @@ class BTree_t
 
         void level_ride(void);
         void level_print(void);
-
-        void insert(KEY& data);
-        BNode_t<KEY>* search(KEY data);
-
-        BNode_t<KEY>* extract(KEY data); 
     
 
         void inorder(void);
@@ -56,11 +52,6 @@ class BTree_t
 
 
         void balanced_insert(const KEY data, BNode_t<KEY>* node);
-
-        void insert(KEY& data, BNode_t<KEY>* node);
-        BNode_t<KEY>* search( KEY data, BNode_t<KEY>* node);
-        BNode_t<KEY>* extract(KEY data, BNode_t<KEY>* node);
-        BNode_t<KEY>* min_value(BNode_t<KEY>* node);        
 
 };
 
@@ -329,30 +320,64 @@ void BTree_t<KEY>::write(std::ostream& os, BNode_t<KEY>* node, int space) {
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// Binary Search Tree ///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+template <class KEY>
+class BSTree_t : public BTree_t<KEY>
+{
+       public:
+ 
+        BSTree_t(void): BTree_t<KEY>() {}
+        
+        ~BSTree_t(void) {}
+        
+        void insert(KEY data);
+        BNode_t<KEY>* search(KEY data);
+        BNode_t<KEY>* extract(KEY data); 
+    
+
+        void inorder(void);
+        void postorder(void);
+        void preorder(void);        
+
+    protected:
+
+
+        void insert(KEY data, BNode_t<KEY>* node);
+        BNode_t<KEY>* search( KEY data, BNode_t<KEY>* node);
+        BNode_t<KEY>* extract(KEY data, BNode_t<KEY>* node);
+        BNode_t<KEY>* min_value(BNode_t<KEY>* node);        
+
+};
+
+
 /////// Search Tree Methods
 
 
 
 // INSERT METHOD
 template <class KEY>
-void BTree_t<KEY>::insert(KEY& data)
+void BSTree_t<KEY>::insert(KEY data)
 {
-    if (root_ != NULL)
+    
+    if (this->root_ != NULL)
     {
-        insert(data, root_);
+        insert(data, this->root_);
     }
     else
     {
-        root_ = new BNode_t<KEY>;
-        root_->data(data);
-        root_->left(NULL);
-        root_->right(NULL);
+        this->root_ = new BNode_t<KEY>;
+        this->root_->data(data);
+        this->root_->left(NULL);
+        this->root_->right(NULL);
     }
     
 }
 
 template <class KEY>
-void BTree_t<KEY>::insert(KEY& data, BNode_t<KEY> *leaf)
+void BSTree_t<KEY>::insert(KEY data, BNode_t<KEY> *leaf)
 {
     if (data < leaf->data())
     {
@@ -389,13 +414,13 @@ void BTree_t<KEY>::insert(KEY& data, BNode_t<KEY> *leaf)
 
 //SEARCH METHOD
 template <class KEY>
-BNode_t<KEY>* BTree_t<KEY>::search(KEY data)
+BNode_t<KEY>* BSTree_t<KEY>::search(KEY data)
 {
-    return search(data, root_);
+    return search(data, this->root_);
 }
 
 template <class KEY>
-BNode_t<KEY>* BTree_t<KEY>::search(KEY data, BNode_t<KEY>* leaf)
+BNode_t<KEY>* BSTree_t<KEY>::search(KEY data, BNode_t<KEY>* leaf)
 {
     if(leaf != NULL)
     {
@@ -423,14 +448,14 @@ BNode_t<KEY>* BTree_t<KEY>::search(KEY data, BNode_t<KEY>* leaf)
 // EXTRACT
 
 template<class KEY>
-BNode_t<KEY>* BTree_t<KEY>::extract(KEY data)
+BNode_t<KEY>* BSTree_t<KEY>::extract(KEY data)
 {
-    extract(data, root_);
+    extract(data, this->root_);
 } 
 
 
 template<class KEY>
-BNode_t<KEY>* BTree_t<KEY>::extract(KEY data, BNode_t<KEY>* node)
+BNode_t<KEY>* BSTree_t<KEY>::extract(KEY data, BNode_t<KEY>* node)
 {
     if (node == NULL) 
         return node;
@@ -464,7 +489,7 @@ BNode_t<KEY>* BTree_t<KEY>::extract(KEY data, BNode_t<KEY>* node)
 
 
 template<class KEY>
-BNode_t<KEY>* BTree_t<KEY>::min_value(BNode_t<KEY>* node)
+BNode_t<KEY>* BSTree_t<KEY>::min_value(BNode_t<KEY>* node)
 {
     BNode_t<KEY>* current(node);
 
@@ -474,3 +499,17 @@ BNode_t<KEY>* BTree_t<KEY>::min_value(BNode_t<KEY>* node)
     }
     return current;
 }
+
+
+
+
+//// AVL Tree
+
+template <class KEY>
+class AVL_t: public BTree_t<KEY> 
+{
+    public:
+
+    AVL_t(void): BTree_t<KEY>(){}
+    ~AVL_t(){}
+};
